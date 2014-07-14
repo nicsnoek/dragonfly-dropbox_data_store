@@ -3,7 +3,7 @@ require 'dropbox_sdk'
 require 'dragonfly/dropbox_data_store/version'
 require 'dragonfly/dropbox_data_store/railtie' if defined?(Rails)
 
-Dragonfly::App.register_datastore(:dropbox) { Dragonfly::DropboxDataStore }
+# Dragonfly::App.register_datastore(:dropbox) { Dragonfly::DropboxDataStore }
 
 module Dragonfly
   class DropboxDataStore
@@ -26,7 +26,7 @@ module Dragonfly
       # TODO: how is path typically specified in dragonfly? leading slash?
     end
 
-    def write(content, opts = {})
+    def store(content, opts = {})
       # TODO: deal with dropbox vs. app_folder stuff
       # figure out how paths work for each
       path = opts[:path] || absolute(relative_path_for(content.name || 'file'))
@@ -35,7 +35,7 @@ module Dragonfly
       relative(data_path)
     end
 
-    def read(path)
+    def retrieve(path)
       path = absolute(path)
       # TODO: possibly return some of dropbox's native metadata automatically
       wrap_error do
